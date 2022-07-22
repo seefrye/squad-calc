@@ -137,7 +137,7 @@ function unpackResult(result) { // used to unpack each array in m14, m15... into
 
 function initHTML() {
     let content = "<!DOCTYPE html>\n<html>\n<style>\ntable, th, td {\nborder: 1px solid black;\n}\n</style>     \n<body>\n"
-    fs.writeFile('/home/chris/Documents/GitHub/squad-calc/output.html', content, err => {
+    fs.writeFile('./output.html', content, err => {
         if (err) {
             console.error(err);
         }
@@ -154,7 +154,7 @@ function closeHTML() {
         // done!
     });
 }
-
+/*
 function initTable(missionLevel, leaderThreat) {
     let content = `<table>\n<tr>\n<th colspan="5">Mission level: ${missionLevel}  Leader Threat: ${leaderThreat}</th>\n</tr>\n<tr>\n<th>TL2</th>\n<th>TL3</th>\n<th>TL4</th>\n<th>TL5</th>\n<th>TL6</th>\n</tr>\n`
     fs.appendFile('/home/chris/Documents/GitHub/squad-calc/output.html', content, err => {
@@ -184,9 +184,46 @@ function unpackTopLevelResult(arr) {
         }
     }
 }
+*/
+function createTable(missionLevel, arr) {
+    let headers = ["TL2","TL3","TL4","TL5","TL6"]
+    let table_as_string = ""
+    table_as_string += `<table>\n<tr>\n<th colspan="5">Mission level: ${missionLevel}  Leader Threat: ${leaderThreat}</th>\n</tr>\n`
+    for (let i = 0; i < headers.length; i++) {
+        table_as_string += "<th>" + headers[i] + "</th>\n"
+    }
+    table_as_string += "</tr>\n"
+    for (let i = 0; i < arr.length; i++) {
+        for (let j = 0; j < arr[i].length; j++) {
+            table_as_string += "<tr>\n"
+            for (let k = 0; k < arr[i][j].length; k++) {
+                table_as_string += "<td>" + arr[i][j][k] + "</td>\n"
+            }
+            table_as_string += "</tr>\n"
+        }
+    }
+    table_as_string += "</table>"
+// console.log(table_as_string)
+fs.appendFile('./output.html', table_as_string, err => {
+    if (err) {
+        console.error(err);
+    }
+});
+}
 
+initHTML()
+createTable(14, m14)
+createTable(15, m15)
+createTable(16, m16)
+createTable(17, m17)
+createTable(18, m18)
+createTable(19, m19)
+createTable(20, m20)
+
+/*
 initHTML()
 initTable(14, leaderThreat)
 unpackTopLevelResult(m14)
 closeTable()
 closeHTML()
+*/
