@@ -108,33 +108,6 @@ while (threat + leaderThreat <= 20) { // start at the lowest, then run through t
     }
 }
 
-function unpackResult(result) { // used to unpack each array in m14, m15... into HTML table cells
-    let content = "<tr>\n"
-    fs.appendFile('/home/chris/Documents/GitHub/squad-calc/output.html', content, err => {
-        if (err) {
-            console.error(err);
-        }
-        // done!
-    });
-    for (let i = 0; i < result.length; i++) { // Start off with a <tr>
-        let content = `<td>${result[i]}</td>\n` // Put each value into a <td>
-        fs.appendFile('/home/chris/Documents/GitHub/squad-calc/output.html', content, err => {
-            if (err) {
-                console.error(err);
-            }
-            // done!
-        });
-    }
-    content = "</tr>\n" // Close the <tr> at the end of the array
-    fs.appendFile('/home/chris/Documents/GitHub/squad-calc/output.html', content, err => {
-        if (err) {
-            console.error(err);
-        }
-        // done!
-    });
-}
-
-
 function initHTML() {
     let content = "<!DOCTYPE html>\n<html>\n<style>\ntable, th, td {\nborder: 1px solid black;\n}\n</style>     \n<body>\n"
     fs.writeFile('./output.html', content, err => {
@@ -147,17 +120,7 @@ function initHTML() {
 
 function closeHTML() {
     let content = "</body>\n</html>"
-    fs.appendFile('/home/chris/Documents/GitHub/squad-calc/output.html', content, err => {
-        if (err) {
-            console.error(err);
-        }
-        // done!
-    });
-}
-/*
-function initTable(missionLevel, leaderThreat) {
-    let content = `<table>\n<tr>\n<th colspan="5">Mission level: ${missionLevel}  Leader Threat: ${leaderThreat}</th>\n</tr>\n<tr>\n<th>TL2</th>\n<th>TL3</th>\n<th>TL4</th>\n<th>TL5</th>\n<th>TL6</th>\n</tr>\n`
-    fs.appendFile('/home/chris/Documents/GitHub/squad-calc/output.html', content, err => {
+    fs.appendFile('./output.html', content, err => {
         if (err) {
             console.error(err);
         }
@@ -165,26 +128,6 @@ function initTable(missionLevel, leaderThreat) {
     });
 }
 
-function closeTable() {
-    let content = "</table>\n"
-    fs.appendFile('/home/chris/Documents/GitHub/squad-calc/output.html', content, err => {
-        if (err) {
-            console.error(err);
-        }
-        // done!
-    });
-}
-
-function unpackTopLevelResult(arr) {
-    for (let i = 0; i < arr.length; i++) { // for every result in m14...
-        let tempArray = arr[i]
-        for (let j = 0; j < tempArray.length; j++) {
-            let tempSubArray = tempArray[j]
-            unpackResult(tempSubArray)
-        }
-    }
-}
-*/
 function createTable(missionLevel, arr) {
     let headers = ["TL2","TL3","TL4","TL5","TL6"]
     let table_as_string = ""
@@ -219,11 +162,4 @@ createTable(17, m17)
 createTable(18, m18)
 createTable(19, m19)
 createTable(20, m20)
-
-/*
-initHTML()
-initTable(14, leaderThreat)
-unpackTopLevelResult(m14)
-closeTable()
 closeHTML()
-*/
