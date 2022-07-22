@@ -21,14 +21,11 @@ let m17 = []
 let m18 = []
 let m19 = []
 let m20 = []
-let finalResults = [m14,m15,m16,m17,m18,m19,m20]
 let inputArray = [1,3,3,2,0]; // fill this in w/ number of 2s, number of 3s, etc
 let leaderThreat = 4; // this is your leader's threat level
 let threat = (14 - leaderThreat); // initialize threat at lowest mission - leader threat
 
 while (threat + leaderThreat <= 20) { // start at the lowest, then run through the highest mission threat (20)
-
-
     let missionLevel = threat + leaderThreat
     if (a === 0 && b === 0 && c === 0 && d === 0 && e === 0) {
         console.log("---")
@@ -113,7 +110,7 @@ while (threat + leaderThreat <= 20) { // start at the lowest, then run through t
 
 function unpackResult(result) { // used to unpack each array in m14, m15... into HTML table cells
     let content = "<tr>\n"
-    fs.appendFile('/home/chris/Documents/GitHub/Squad Calc/output.html', content, err => {
+    fs.appendFile('/home/chris/Documents/GitHub/squad-calc/output.html', content, err => {
         if (err) {
             console.error(err);
         }
@@ -121,7 +118,7 @@ function unpackResult(result) { // used to unpack each array in m14, m15... into
     });
     for (let i = 0; i < result.length; i++) { // Start off with a <tr>
         let content = `<td>${result[i]}</td>\n` // Put each value into a <td>
-        fs.appendFile('/home/chris/Documents/GitHub/Squad Calc/output.html', content, err => {
+        fs.appendFile('/home/chris/Documents/GitHub/squad-calc/output.html', content, err => {
             if (err) {
                 console.error(err);
             }
@@ -129,7 +126,7 @@ function unpackResult(result) { // used to unpack each array in m14, m15... into
         });
     }
     content = "</tr>\n" // Close the <tr> at the end of the array
-    fs.appendFile('/home/chris/Documents/GitHub/Squad Calc/output.html', content, err => {
+    fs.appendFile('/home/chris/Documents/GitHub/squad-calc/output.html', content, err => {
         if (err) {
             console.error(err);
         }
@@ -140,7 +137,7 @@ function unpackResult(result) { // used to unpack each array in m14, m15... into
 
 function initHTML() {
     let content = "<!DOCTYPE html>\n<html>\n<style>\ntable, th, td {\nborder: 1px solid black;\n}\n</style>     \n<body>\n"
-    fs.writeFile('/home/chris/Documents/GitHub/Squad Calc/output.html', content, err => {
+    fs.writeFile('/home/chris/Documents/GitHub/squad-calc/output.html', content, err => {
         if (err) {
             console.error(err);
         }
@@ -150,7 +147,7 @@ function initHTML() {
 
 function closeHTML() {
     let content = "</body>\n</html>"
-    fs.appendFile('/home/chris/Documents/GitHub/Squad Calc/output.html', content, err => {
+    fs.appendFile('/home/chris/Documents/GitHub/squad-calc/output.html', content, err => {
         if (err) {
             console.error(err);
         }
@@ -160,7 +157,7 @@ function closeHTML() {
 
 function initTable(missionLevel, leaderThreat) {
     let content = `<table>\n<tr>\n<th colspan="5">Mission level: ${missionLevel}  Leader Threat: ${leaderThreat}</th>\n</tr>\n<tr>\n<th>TL2</th>\n<th>TL3</th>\n<th>TL4</th>\n<th>TL5</th>\n<th>TL6</th>\n</tr>\n`
-    fs.appendFile('/home/chris/Documents/GitHub/Squad Calc/output.html', content, err => {
+    fs.appendFile('/home/chris/Documents/GitHub/squad-calc/output.html', content, err => {
         if (err) {
             console.error(err);
         }
@@ -170,7 +167,7 @@ function initTable(missionLevel, leaderThreat) {
 
 function closeTable() {
     let content = "</table>\n"
-    fs.appendFile('/home/chris/Documents/GitHub/Squad Calc/output.html', content, err => {
+    fs.appendFile('/home/chris/Documents/GitHub/squad-calc/output.html', content, err => {
         if (err) {
             console.error(err);
         }
@@ -191,17 +188,5 @@ function unpackTopLevelResult(arr) {
 initHTML()
 initTable(14, leaderThreat)
 unpackTopLevelResult(m14)
-initTable(15, leaderThreat)
-unpackTopLevelResult(m15)
-initTable(16, leaderThreat)
-unpackTopLevelResult(m16)
-initTable(17, leaderThreat)
-unpackTopLevelResult(m17)
-initTable(18, leaderThreat)
-unpackTopLevelResult(m18)
-initTable(19, leaderThreat)
-unpackTopLevelResult(m19)
-initTable(20, leaderThreat)
-unpackTopLevelResult(m20)
 closeTable()
 closeHTML()
