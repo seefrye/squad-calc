@@ -66,7 +66,7 @@ while (threat + leaderThreat <= 20) { // start at the lowest, then run through t
         tempArray.push(a,b,c,d,e) // store the values temporarily
         if (a <= inputArray[0] && b <= inputArray[1] && c <= inputArray[2] && d <= inputArray[3] && e <= inputArray[4]) { // check that the combination is one your squad can actually take
             resultsArray.push([tempArray]) // push results to the results array
-            console.log("2 x " + a + ", 3 x " + b + ", 4 x " + c + ", 5 x " + d + ", 6 x " + e) // console output, not necessary
+            console.log("2: x" + a + ", 3: x" + b + ", 4: x" + c + ", 5: x" + d + ", 6: x" + e) // console output, not necessary
             if (missionLevel === 14) { // check which array to write to, and push the result
                 m14.push([tempArray])
             } else if (missionLevel === 15) {
@@ -109,7 +109,20 @@ while (threat + leaderThreat <= 20) { // start at the lowest, then run through t
 }
 
 function initHTML() { // writeFile will overwrite the existing file. this generates HTML header, basically everything before the first table. style needs some work
-    let content = "<!DOCTYPE html>\n<html>\n<style>\ntable, th, td {\nborder: 1px solid black;\n}\n</style>     \n<body>\n"
+    let content = `
+    <!DOCTYPE html>\n
+        <html>\n
+            <style>\n
+                table, th, td {\n
+                    border: 1px solid black;\n
+                    border-collapse: collapse;\n
+                    text-align: center;
+                }\n
+                td.null {\n
+                    background-color: black;\n
+                }\n
+            </style>\n
+        <body>\n`
     fs.writeFile('./output.html', content, err => {
         if (err) {
             console.error(err);
@@ -140,12 +153,16 @@ function createTable(missionLevel, arr) { // builds a table top to bottom
         for (let j = 0; j < arr[i].length; j++) {
             table_as_string += "<tr>\n"
             for (let k = 0; k < arr[i][j].length; k++) {
-                table_as_string += "<td>" + arr[i][j][k] + "</td>\n"
+                if (arr[i][j][k] === 0) {
+                    table_as_string += "<td class=\"null\">" + arr[i][j][k] + "</td>\n"
+                } else {
+                    table_as_string += "<td>" + arr[i][j][k] + "</td>\n"
+                }
             }
             table_as_string += "</tr>\n"
         }
     }
-    table_as_string += "</table>" // close out table
+    table_as_string += "</table>\n<br>\n" // close out table
 fs.appendFile('./output.html', table_as_string, err => { // write holder string to file, only once per table
     if (err) {
         console.error(err);
